@@ -11,10 +11,12 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -28,6 +30,7 @@ public class MainActivity extends BaseActivity
     String url;
     String name;
     String title;
+    SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,22 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView.loadUrl("https://www.dayhaat.com/");
+            }
+        });
+        swipe = findViewById(R.id.swipeContainer);
+        swipe.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        webView.reload();
+                        swipe.setRefreshing(false);
+                    }
+                }
+        );
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +99,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-/*    @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -95,12 +114,13 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_cart) {
+            webView.loadUrl("https://www.dayhaat.com/index.php?route=checkout/cart");
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -134,6 +154,18 @@ public class MainActivity extends BaseActivity
 
             } else if (id == R.id.nav_trending) {
                 webView.loadUrl("https://www.dayhaat.com/new-trending-books");
+
+            } else if (id == R.id.nav_orders) {
+                webView.loadUrl("https://www.dayhaat.com/index.php?route=account/order");
+
+            } else if (id == R.id.nav_cart) {
+                webView.loadUrl("https://www.dayhaat.com/index.php?route=checkout/cart");
+
+            } else if (id == R.id.nav_wishlist) {
+                webView.loadUrl("https://www.dayhaat.com/index.php?route=account/wishlist");
+
+            } else if (id == R.id.nav_account) {
+                webView.loadUrl("https://www.dayhaat.com/index.php?route=account/account");
 
             }
         } else {
@@ -172,6 +204,7 @@ public class MainActivity extends BaseActivity
 
     private void settingWebview() {
         WebSettings settings = webView.getSettings();
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setUserAgentString("kurlz");
         settings.setJavaScriptEnabled(true);
 
