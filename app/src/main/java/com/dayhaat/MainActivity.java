@@ -22,6 +22,11 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,6 +36,12 @@ public class MainActivity extends BaseActivity
     String name;
     String title;
     SwipeRefreshLayout swipe;
+
+    private DrawerLayout mDrawerLayout;
+    ExpandableListAdapter mMenuAdapter;
+    ExpandableListView expandableList;
+    List<ExpandedMenuModel> listDataHeader;
+    HashMap<ExpandedMenuModel, List<String>> listDataChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,8 @@ public class MainActivity extends BaseActivity
                 webView.loadUrl("https://www.dayhaat.com/");
             }
         });
+
+
         swipe = findViewById(R.id.swipeContainer);
         swipe.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
@@ -65,6 +78,8 @@ public class MainActivity extends BaseActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableList = (ExpandableListView) findViewById(R.id.navigationmenu);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -74,12 +89,44 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        prepareListData();
+
+        mMenuAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild, expandableList);
+
+        // setting list adapter
+        expandableList.setAdapter(mMenuAdapter);
+
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
+                //Log.d("DEBUG", "submenu item clicked");
+                return false;
+            }
+        });
+        expandableList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                //Log.d("DEBUG", "heading clicked");
+                return false;
+            }
+        });
+
+
         webView = (WebView) findViewById(R.id.webView);
         url = getIntent().getStringExtra("URL");
         name = getIntent().getStringExtra("NAME");
         title = getIntent().getStringExtra("TITLE");
 
-        url = "https://www.dayhaat.com/";
+        // check for notification data
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            //bundle must contain all info sent in "data" field of the notification
+            url = bundle.getString("url");
+        }
+
+
+        if (url == null || url.equals(""))
+            url = "https://www.dayhaat.com/";
 
         if (isNetworkConnected()) {
             settingWebview();
@@ -88,6 +135,49 @@ public class MainActivity extends BaseActivity
             Snackbar.make(webView, "No Internet connection", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
     }
+
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<ExpandedMenuModel>();
+        listDataChild = new HashMap<ExpandedMenuModel, List<String>>();
+
+        ExpandedMenuModel item1 = new ExpandedMenuModel();
+        item1.setIconName("Books & Magazines");
+        item1.setIconImg(android.R.drawable.ic_delete);
+        // Adding data header
+        listDataHeader.add(item1);
+
+        ExpandedMenuModel item2 = new ExpandedMenuModel();
+        item2.setIconName("heading2");
+        item2.setIconImg(android.R.drawable.ic_delete);
+        listDataHeader.add(item2);
+
+        ExpandedMenuModel item3 = new ExpandedMenuModel();
+        item3.setIconName("heading3");
+        item3.setIconImg(android.R.drawable.ic_delete);
+        listDataHeader.add(item3);
+
+        // Adding child data
+        List<String> heading1 = new ArrayList<String>();
+        heading1.add("Academic Books");
+        heading1.add("Competitive Exams");
+        heading1.add("Research Oriented");
+        heading1.add("Tip of the Tongue");
+        heading1.add("In-Depth Books");
+        heading1.add("New/Trending Books");
+        heading1.add("Show All");
+
+
+        List<String> heading2 = new ArrayList<String>();
+        heading2.add("Submenu of item 2");
+        heading2.add("Submenu of item 2");
+        heading2.add("Submenu of item 2");
+
+        listDataChild.put(listDataHeader.get(0), heading1);// Header, Child data
+        listDataChild.put(listDataHeader.get(1), heading2);
+
+    }
+
 
     @Override
     public void onBackPressed() {

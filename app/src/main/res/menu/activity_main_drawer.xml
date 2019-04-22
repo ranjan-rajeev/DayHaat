@@ -3,47 +3,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Home" />
-        <item
-            android:id="@+id/nav_academic"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Academic Books" />
-        <item
-            android:id="@+id/nav_competitive"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Competitive Exams" />
-        <item
-            android:id="@+id/nav_Justfun"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Just4Fun" />
-        <item
-            android:id="@+id/nav_research"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Research Oriented" />
-        <item
-            android:id="@+id/nav_tip_tongue"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tip of the Tongue" />
-        <item
-            android:id="@+id/nav_in_depth"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="In-Depth Books" />
-        <item
-            android:id="@+id/nav_accessory"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Accessories" />
-        <item
-            android:id="@+id/nav_trending"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="New/Trending Books" />
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_menu_camera"
+        android:title="Home" />
+    <item android:title="Books &amp; Magazines">
+        <menu>
 
-    </group>
 
-    <item android:visible="true">
+            <item
+                android:id="@+id/nav_academic"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Academic Books" />
+            <item
+                android:id="@+id/nav_competitive"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Competitive Exams" />
+
+            <item
+                android:id="@+id/nav_research"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Research Oriented" />
+            <item
+                android:id="@+id/nav_tip_tongue"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Tip of the Tongue" />
+            <item
+                android:id="@+id/nav_in_depth"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="In-Depth Books" />
+
+            <item
+                android:id="@+id/nav_trending"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="New/Trending Books" />
+        </menu>
+
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_Justfun"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Just4Fun" />
+        </menu>
+
+    </item>
+
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_accessory"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Accessories" />
+        </menu>
+
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_dealofday"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Deal of the day" />
+        </menu>
+
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_garments"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Garments" />
+        </menu>
+
+    </item>
+
+
+    <item
+        android:title="Profile"
+        android:visible="true">
         <menu>
             <item
                 android:id="@+id/nav_orders"

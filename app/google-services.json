@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "97604529902",
+    "firebase_url": "https://dayhaat-ee252.firebaseio.com",
+    "project_id": "dayhaat-ee252",
+    "storage_bucket": "dayhaat-ee252.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97604529902:android:066781cdc6676730",
+        "android_client_info": {
+          "package_name": "com.dayhaat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97604529902-efqhk9uoortgo2vqmer2g93ll8do9jim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dayhaat",
+            "certificate_hash": "c8880954a275894a76869efad55e26a2df9c14a7"
+          }
+        },
+        {
+          "client_id": "97604529902-o02k47epotnal8o78b4si5oc2knn6u4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOx7ResnZ5Ul7ko9NNbFf2bbCU9ItKELU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97604529902-o02k47epotnal8o78b4si5oc2knn6u4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
