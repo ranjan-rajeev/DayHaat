@@ -31,13 +31,6 @@ import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    /****************************************************
-     (Key)           (Action)
-     NL >>>>>>>>>  Notification List
-     WB >>>>>>>   WebView
-     MSG >>>>>>>  Notification MESSAGE
-     Default >>>  Home Page
-     **************************************************/
     private NotificationManager mManager;
     private static final String TAG = "FirebaseIDService";
     public static final String CHANNEL_ID = "com.dayhaat.NotifyID";
@@ -59,16 +52,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(RemoteMessage remoteMessage) {
         Intent intent;
-        String title = "DayHaat", body = "", url = "https://www.dayhaat.com/", banner;
+        String title = "DayHaat", body = "Welcome to DayHaat!!", url = "https://www.dayhaat.com/", banner;
         if (remoteMessage != null) {
             RemoteMessage.Notification notification = remoteMessage.getNotification();
             Map<String, String> data = remoteMessage.getData();
             Log.d(TAG, "Data  :" + data.toString());
-            Log.d(TAG, "Title : " + notification.getTitle());
-            Log.d(TAG, "Body : " + notification.getBody());
+            //Log.d(TAG, "Title : " + notification.getTitle());
+            //Log.d(TAG, "Body : " + notification.getBody());
 
-            title = notification.getTitle();
-            body = notification.getBody();
+            if (data.get("title") != null) {
+                title = data.get("title");
+            }
+            if (data.get("body") != null) {
+                body = data.get("body");
+            }
+
+            if (notification != null) {
+                title = notification.getTitle();
+                body = notification.getBody();
+            }
+
 
             if (data.get("url") != null) {
                 url = data.get("url");
@@ -79,7 +82,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 //new createBitmapFromURL(banner).execute();
             }
             intent = new Intent(this, MainActivity.class);
-            intent.putExtra("URL", url);
+            intent.putExtra("url", url);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE, intent,
                     PendingIntent.FLAG_CANCEL_CURRENT);
